@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useState, useEffect } from "react";
 
-function App() {
+import { Route, Switch } from "react-router-dom";
+
+import Nav from './Navigation/Nav'
+import PrivateRoute from "./Routes/PrivateRoute";
+import AuthContext from './Context/AuthContext';
+
+import Home from './Components/Home';
+import Register from './Components/Register';
+import SecretPage from './Components/SecretPage';
+import ErrorPage from './Components/ErrorPage';
+
+function App(props) {
+  const aContext = useContext(AuthContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <React.Fragment>
+      <Nav/>
+      <hr />
+      <Switch>
+        <Route path="/" exact>
+          <Home/>
+        </Route>
+
+        <Route path="/register">
+          <Register/>
+        </Route>
+
+        <PrivateRoute path="/secret_page">
+          <SecretPage/>
+        </PrivateRoute>
+
+        <Route path="*">
+          <ErrorPage/>
+        </Route>
+      </Switch>
+    </React.Fragment>
+    // </authContext.Provider>
   );
 }
 
